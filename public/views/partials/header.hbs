@@ -1,0 +1,20 @@
+<div class="row header w-100 d-flex justify-content-center align-items-end">
+    <div class="col-md-12 d-flex justify-content-center carousel py-3">
+        <h5 class="m-0 heading-title">
+            {{#if language }}{{ language.heading }}
+            {{else}}{{ headingTitle }}
+            {{/if}}            
+        </h5>
+        <a class="carousel-control-prev" href="{{ headingLink }}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.carousel-control-prev').click(function(e) {
+            spinner.show();
+        })
+    })
+</script>

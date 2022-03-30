@@ -1,0 +1,186 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="global-container">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+        <section class="otp form p-3 m-0 w-100 h-100 flex-grow-1 d-flex flex-column h-100">
+            <form action="{{ host }}/otp" method="post" class="">
+                <h3 class="text-left mt-2">Verifying</h3>
+                <div class="text-left py-3 f14">
+                    {{#if language }}{{ language.info }}{{else}}Enter the code we sent to the mobile number{{/if}}                    
+                </div>
+                <div class="form-group px-0 py-0 mb-0">
+                <span class="f12">{{#if language }}{{ language.enterOtp }}{{else}}Enter OTP{{/if}}</span>
+                <div class="col-md-12 px-0 pin d-flex justify-content-center {{#if response.responseMessage }}warning {{/if}}">
+                    <input type="number" maxlength="1" class="form-control" id="txt1" name="txt1" value="{{ data.txt1 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    <input type="number" maxlength="1" class="form-control" id="txt2" name="txt2" value="{{ data.txt2 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    <input type="number" maxlength="1" class="form-control" id="txt3" name="txt3" value="{{ data.txt3 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    <input type="number" maxlength="1" class="form-control" id="txt4" name="txt4" value="{{ data.txt4 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    <input type="number" maxlength="1" class="form-control" id="txt5" name="txt5" value="{{ data.txt5 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    <input type="number" maxlength="1" class="form-control" id="txt6" name="txt6" value="{{ data.txt6 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                </div>
+                <span class="f12 text-danger">{{ response.responseMessage }}</span>
+                </div>
+
+                <div class="form-group px-0 d-flex flex-column justify-content-center align-items-start flex-grow-1 mb-0">
+                <div class="form-row w-100 pt-5">
+                    <div class="form-group w-100 d-flex flex-column justify-content-center">
+                        <b id="resend" class="justify-content-center align-self-center f12 resend">{{#if language }}{{ language.resendOtp }}{{else}}Resend OTP{{/if}} <span id="time">(00 : 30)</span></b>
+                    </div>
+                </div>
+                <div class="form-row w-100">
+                    <div id="divBtn" class="form-group w-25 m-auto">
+                        <input type="hidden" id="oldPhoneCode" name="oldPhoneCode" value="+62">
+                        <input type="hidden" id="oldPhone" name="oldPhone" value="{{ data.oldPhone }}">
+                        <input type="hidden" id="phoneCode" name="phoneCode" value="+62">
+                        <input type="hidden" id="phone" name="phone" value="{{ data.phone }}">
+                        <input type="hidden" id="deviceId" name="deviceId" value="{{ data.deviceId }}">
+                        <input type="hidden" id="oldEmail" name="oldEmail" value="{{ data.oldEmail }}">
+                        <input type="hidden" id="email" name="email" value="{{ data.email }}">
+
+                        <input type="hidden" id="filter" name="filter" value="{{ data.filter }}">
+                    <input type="submit" class="btn waves-effect py-1 px-4 h-auto text-center" name="submit" id="submit" value="{{#if language }}{{ language.verify }}{{else}}Verify{{/if}}">
+                    </div>
+                </div>
+                </div>  
+
+            </form>
+        </section>
+    </div>
+</div>
+<style>
+    .otp input[type=text], 
+    .otp input[type=number] {
+        width: 15%;
+        margin: 5px;
+    }
+</style>
+
+<script>    
+    $(document).ready(function () {
+      var el = document.querySelectorAll('input[type="number"]');
+      $(".resend").click(function(){
+        if ($(".sendClick").length ) {
+          spinner.show();
+          var phone = document.getElementById("phone").value;
+          var phoneCode = document.getElementById("phoneCode").value;
+          var oldPhone = document.getElementById("oldPhone").value;
+          var oldPhoneCode = document.getElementById("oldPhoneCode").value;
+          var deviceId = document.getElementById("deviceId").value;
+          var data = JSON.stringify({"phone": phone, "phoneCode": phoneCode, "oldPhone": oldPhone, "oldPhoneCode": oldPhoneCode, "deviceId": deviceId});
+          console.log('resend =>',data)
+          $.post("{{ host }}" + "/otp/resend", {data:data}, function(result){
+            spinner.hide();
+            document.getElementsByClassName('text-danger')[0].innerHTML='';
+            el[0].value = ''; el[1].value = ''; el[2].value = ''; el[3].value = ''; el[4].value = ''; el[5].value='';
+            var re = document.getElementById("resend");
+            re.style.removeProperty('color');
+            re.classList.remove('sendClick')
+            var fiveMinutes = 30 * 1,
+              display = document.querySelector('#time');
+            startTimer(fiveMinutes, display);            
+          });
+        }
+      });
+      $(':input[type="number"]').keyup(function(e) {
+        if(e.target.id=='txt6') {
+          if(el[0].value && el[1].value && el[2].value && el[3].value && el[4].value && el[5].value){
+            document.getElementById("submit").style.backgroundColor='#144371';
+            //$('#submit').click();
+          }
+        }
+      });
+      var container = document.getElementsByClassName("pin")[0];
+      container.onkeyup = function(e) {
+        var target = e.srcElement;
+        var maxLength = parseInt(target.attributes["maxlength"].value, 6);
+        var myLength = target.value.length;
+        if (myLength >= maxLength) {
+          var next = target;
+          while (next = next.nextElementSibling) {
+            if (next == null)
+              break;
+            if (next.tagName.toLowerCase() == "input") {
+              next.focus();
+              break;
+            }
+          }
+        }
+
+        var txt = target.id
+        //console.log('txtId =>',txt)
+
+        var id = parseInt(txt.substr(3,1))-1
+        var idClear =txt.substr(3,1)
+        txt = "txt"+id;
+        var txtClear = "txt"+idClear;
+        //console.log('txtId =>',id)
+        var input = document.getElementById(target.id);
+        input.onkeydown = function() {
+          var key = event.keyCode || event.charCode;
+          //console.log('key =>',key)
+
+          if( key == 8 || key == 46 ) {
+            console.log('back txt =>',txt)
+            document.getElementById(txt).focus()
+            if(txt == 'txt5'){
+              //document.getElementById('txt5').focus()
+              document.getElementById('txt6').value = ''
+              document.getElementById(txt).value = ''
+            }else{
+              document.getElementById(txt).value=''
+              document.getElementById(txtClear).value='';
+              document.getElementById(txt).focus();              
+            }
+          }else{
+            if(el[0].value && el[1].value && el[2].value && el[3].value && el[4].value && el[5].value){
+              document.getElementById("submit").style.backgroundColor='#144371';
+            }
+          }
+        };
+      }      
+    })
+    
+    function fValidasi() {
+      var el = document.querySelectorAll('input[type="number"]');
+      if(el[0].value && el[1].value && el[2].value && el[3].value && el[4].value && el[5].value){
+        spinner.show();
+        return true;
+      }else {
+        return false;
+      }
+    }
+
+    function startTimer(duration, display) {
+      var timer = duration, minutes, seconds;
+      var x = setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = '('+minutes + " : " + seconds+')';
+
+          if (--timer < 0) {
+              timer = duration;
+              clearInterval(x);
+              var re = document.getElementById("resend");
+              re.classList.add('sendClick')
+              re.style.cursor="pointer"
+              re.style.color = "#045789"
+
+              //el.innerHTML = '<a onclick="return resendOtp()" href="#">Resend OTP</a>';
+              var el = document.getElementById("time");
+              el.innerHTML = '';
+              el.style.color = "#045789"
+          }
+      }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 30 * 1,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+    
+</script>

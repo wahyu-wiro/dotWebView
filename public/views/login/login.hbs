@@ -1,0 +1,92 @@
+<div class="global-container">
+  <div class="container-fluid white-container d-flex flex-column justify-content-center align-items-center signup">
+    <section class="form mx-3 mb-4 w-100 flex-grow-1 d-flex flex-column justify-content-center align-items-center login">
+    {{>logoWithText}}
+
+      <form action="{{ host }}/login" method="post" class="auth-box w-100 card p-4 m-0 {{#if failed }}warning {{/if}}" onsubmit="return pValidasi()">
+          <h3 class="card-title text-left py-2">Sign in</h3>
+          <div class="text-left pb-4 f14">
+            New user? <a href="{{ host }}/signup"><b class="spinner">Create an account</b></a>
+          </div>
+          <div class="form-group px-0 mb-0">
+            <label for="phone" class="f12">Mobile number</label>
+            <div class="form-group form-primary w-100 {{#if failed }}warning{{/if}}">
+              <input type="number" class="form-control px-0" id="phone" name="phone" value="{{ data.phone }}" required="required">
+              <input type="hidden" class="form-control" id="phoneCode" name="phoneCode" value="+62">
+              <input type="hidden" class="form-control" id="deviceId" name="deviceId" value="">
+              <span class="f12 text-danger">{{ response.responseMessage }}</span>
+            </div>
+          </div>
+          <div class="form-group col px-0">
+            <div class="col-md-12 text-right px-0"> 
+              <button id="submit" name="submit" class="btn btn-primary waves-effect px-4 text-center">Sign in</button>
+            </div>
+          </div>
+      </form>
+    </section>
+  </div>
+</div>
+<style>
+  .global-container{
+    background: url('{{ host_no_basepath }}/images/loginBG.jpg') no-repeat;
+    background-size: cover;
+  }
+</style>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.2.0/bootbox.min.js'></script>
+<script>
+  function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+  }
+  
+  $(document).ready(function () {
+    //var deviceId =  localStorage.getItem("deviceIdUltipage");
+    var deviceId = window['deviceId'];
+    if(!deviceId || deviceId == '[object HTMLInputElement]') { deviceId = randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    }
+    document.getElementById('deviceId').value=deviceId
+    $('.spinner').click(function(e) {
+        spinner.show();
+    })
+    var txt = document.getElementsByClassName('text-danger')
+    if(txt[0].innerHTML){
+      bootbox.confirm({
+        title: "Cannot login",
+        message: "The mobile number you entered is incorrect. Please try again.",
+        closeButton: false,
+        animate: true,
+        className: "my-notif",            
+        buttons: {
+          confirm: {
+            label: 'Try Again',
+            className: 'btn-default w-100'
+          },
+          cancel: {
+            label: 'Back',
+            className: 'btn-default d-none'
+          }
+        },
+        callback: function (result) {
+          console.log('This was logged in the callback: ' + result);
+        }
+      });
+    }
+  })
+
+  function pValidasi() {
+    if(document.getElementById('phone').value ) {
+      spinner.show();
+      return true;
+    }else{
+      return false;
+    }
+  }
+</script>
+<style>
+  .login {
+    height: 65%;
+  }
+  
+  
+</style>

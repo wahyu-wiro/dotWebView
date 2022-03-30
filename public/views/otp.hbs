@@ -1,0 +1,77 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="global-container">
+  <div class="container-fluid white-container d-flex flex-column justify-content-center align-items-center">
+    <section class="form otp mx-3 mb-4 w-100 flex-grow-1 d-flex flex-column justify-content-center align-items-center login">
+      {{>logoWithText}}
+
+      <form action="{{ host }}/otp" method="post" class="auth-box card px-4 pt-4 m-0 w-100" name="otpForm" id="otpForm" onsubmit="return fValidasi()">
+        <h3 class="text-left mt-2">Verifying</h3>
+        <div class="text-left py-3 f14">
+        </div>
+        <div class="form-group px-0 mb-0 pt-1">
+          <label for="password" class="f12">Password</label>
+          <div class="form-group form-primary m-0 p-0 d-flex w-100">
+            <input type="password" class="form-control h-auto p-0" id="password" name="password" value="{{ data.password }}">
+          </div>
+          <span class="f12 text-danger">{{ response.responseMessage }}</span>
+
+        </div>        
+        <div class="form-group px-0 d-flex flex-column justify-content-center align-items-start flex-grow-1 mb-0">
+          <div class="form-row w-100">
+            <div class="form-group col-md-8 col-8 mb-0">
+              &nbsp;
+            </div>
+            <div id="divBtn" class="form-group col-md-4 col-4 text-right mb-0 p-0">
+              <input type="hidden" id="phone" name="phone" value="{{ data.phone }}">
+              <input type="hidden" id="deviceId" name="deviceId" value="{{ data.deviceId }}">
+              <input type="hidden" id="filter" name="filter" value="{{ data.filter }}">
+              <input type="submit" class="btn waves-effect py-1 px-4 h-auto text-center" name="submit" id="submit" value="Verify">
+            </div>
+          </div>
+        </div>
+        <div class="mx-0 footer py-2">
+          <div class="col-sm-12 text-center">
+            {{#if back }}
+            <a href="{{ back.link }}/">{{ back.text }}</a>
+            {{else}}
+            <a href="{{ host }}/">Back to Sign In</a>
+            {{/if}}
+          </div>
+        </div>
+
+      </form>
+    </section>
+  </div>
+  <style>
+  .global-container{
+    background: url('{{ host_no_basepath }}/images/loginBG.jpg') no-repeat;
+    background-size: cover;
+  }
+</style>
+
+  <script>
+    $(document).ready(function () {
+      var c = document.getElementById('password');
+      c.onkeyup = function(e) {
+        var target = e.srcElement;
+        var myLength = target.value.length;
+        console.log('myLength =>',myLength);
+        if(parseInt(myLength)>5) {
+          document.getElementById("submit").style.backgroundColor='#144371';
+        }
+        
+      }
+    })
+    
+    function fValidasi() {
+      var password = document.getElementById('password').value;
+      if(password != ""){
+        spinner.show();
+        return true;
+      }else {
+        return false;
+      }
+    }
+    
+  </script>
+  

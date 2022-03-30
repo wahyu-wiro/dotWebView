@@ -1,0 +1,140 @@
+<div class="global-container">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+
+        <form action="{{ host }}/account/changeUrl" method="post" class="form change-url h-100" onsubmit="return fValidate()">
+            <section class="p-3 m-0 w-100 flex-grow-1 d-flex flex-column h-75">
+
+                <div class="form-group d-flex w-100 px-0 py-2 mb-0">
+                    <div class="col-sm-12 col-12 px-0">
+                        <h5>{{#if language }}{{ language.regardingUrlSeo }}{{else}}Regarding URL and SEO{{/if}}</h5>
+                        <p class="f12">{{#if language }}{{ language.info }}{{else}}The impact of changing URLs on your SEO can be severe. Doing so makes your site
+                            susceptible to 404 errors and broken links, which means it's nearly impossible for Google to
+                            properly index your site. Please update your SEO settings and be more consider before
+                            changing.{{/if}}
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group px-0 mb-2">
+                    <label for="currentURL">{{#if language }}{{ language.currentUrl }}{{else}}Current URL{{/if}}</label>
+                    <div class="form-group form-primary w-100 mb-1">
+                        <div class="f14 current-url">
+                            {{#if data.urlName }} ultipage.id/{{ data.urlName }}
+                            {{else}} ultipage.id/qhvn0oryotsv
+                            {{/if}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group px-0 mb-2">
+                    <label for="currentURL">{{#if language }}{{ language.newUrl }}{{else}}New URL{{/if}}</label>
+                    <div class="form-group form-primary w-100 mb-1">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text pr-0">ultipage.id/</div>
+                            </div>
+                            <input type="text" class="form-control pl-1" id="newUrlName" name="newUrlName"
+                                placeholder="Username" value="{{ data.newUrlName }}">
+                        </div>
+                        <span id="nameWarning" class="f12 text-danger d-none">{{ res.responseMessage }}</span>
+                    </div>
+                </div>
+
+            </section>
+            <div id="divBtn" class="form-group py-3 mb-0 px-0 d-flex align-items-end justify-content-center h-25">
+                <button class="btn btn-primary defaultButton waves-effect px-5 py-1 text-center">{{#if language }}{{ language.btnContinue }}{{else}}Continue{{/if}}</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.2.0/bootbox.min.js'></script>
+<script>
+    /* Dialog Box */   
+    $('form').submit(function(e) {
+        var currentForm = this;
+        e.preventDefault();
+        var newUrl = document.getElementById("newUrlName").value;
+        if(newUrl) {
+            bootbox.confirm({
+                title: "{{#if language }}{{ language.notification }}{{else}}Notification{{/if}}",
+                message: "{{#if language }}{{ language.notificationInfo }}{{else}}Are you sure you want to change your URL?{{/if}}",
+                closeButton: false,
+                animate: true,
+                className: "my-notif",            
+                buttons: {
+                    confirm: {
+                        label: '{{#if language }}{{ language.notificationOk }}{{else}}Ok{{/if}}',
+                        className: 'btn-default'
+                    },
+                    cancel: {
+                        label: '{{#if language }}{{ language.notificationBack }}{{else}}Back{{/if}}',
+                        className: 'btn-default'
+                    }
+                },
+                callback: function (result) {
+                    console.log('This was logged in the callback: ' + result);
+                    if (result) {
+                        spinner.show();
+                        currentForm.submit();
+                    }
+
+                }
+            });  
+        }      
+    });
+    $(document).ready(function () {
+        $(':input').keyup(function(e){
+            var text = e.currentTarget.value
+            if(e.currentTarget.id == 'newUrlName') {
+                if(e.currentTarget.value){
+                    if(text.length >= 3) {
+                        var element = document.getElementById("divBtn");
+                        element.classList.add("blue");
+                    }
+                }
+            }
+        })
+        var txt = document.getElementById('nameWarning').innerHTML
+        console.log('txt =>',txt)
+        if(txt != ""){
+            bootbox.confirm({
+                title: "Notification",
+                message: txt,
+                closeButton: false,
+                animate: true,
+                className: "my-notif-ok",            
+                buttons: {
+                confirm: {
+                    label: 'Ok',
+                    className: 'btn-danger m-auto w-25'
+                },
+                cancel: {
+                    label: 'Back',
+                    className: 'btn-default d-none'
+                }
+                },
+                callback: function (result) {
+                console.log('This was logged in the callback: ' + result);
+                }
+            });
+        }        
+    })
+    function fValidate() {
+        var newUrl = document.getElementById("newUrlName").value;
+        var fg = document.getElementsByClassName('form-group')
+        var iFalse = 0;
+        if (newUrl) {
+        }else{
+            iFalse = 1;
+            document.getElementById('nameWarning').innerHTML = 'please entry valid url'
+            fg[1].classList.add('warning');
+            spinner.hide();
+        }
+
+        if(iFalse == 1) {
+            return false;
+        }
+    }
+</script>

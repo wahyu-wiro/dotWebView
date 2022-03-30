@@ -1,0 +1,128 @@
+{
+  "lang_name": {
+    "en": "English",
+    "id": "Indonesian"
+  },
+  "signin":{
+    "heading": "Sign In",
+    "newUser": "New User?",
+    "createAccount": "Create an account",
+    "mobileNumber": "Mobile Number",
+    "btnSignin": "Sign In",
+    "or": "OR",
+    "btnGoogle": "Continue with Google"
+  },
+  
+  "otp":{
+    "heading": "Verifying",
+    "info": "Enter the code we sent to the mobile number",
+    "enterOtp": "Enter OTP",
+    "resendOtp": "Resend OTP",
+    "verify": "Verify",
+    "backToSignin": "Back To Sign in",
+    "warning": "The OTP you entered is incorrect"
+  },
+
+  "signup":{    
+    "signup" : "Sign up",
+    "alreadyHaveAccount" : "Already have an account?",
+    "signinInHere" : "Sign In here",
+    "fullname" : "Full Name",
+    "mobileNumber": "Mobile Number",
+    "email": "Email",
+    "btnNext": "Next",
+    "backToSignup": "Back to Sign Up"    
+  },
+
+  "account": {    
+    "heading" : "Account",
+    "myAccount" : "My Account",
+    "changeUrl" : "Change URL",
+    "switchAccount": "Switch Accounts",
+    "insight": "Insights",
+    "seoTools": "SEO Tools",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+
+  "myAccount": {    
+    "heading" : "My Account",
+    "fullName" : "Full Name",
+    "mobileNumber": "Mobile Number",
+    "email": "Email",
+    "linkAccount": "Link Account",
+    "linkAccountWithGoogle": "Connect to Google",
+    "subscriptionPlan": "Subscription Plan",
+    "basicPlan": "Basic Plan",
+    "getPremium": "Unlock premium benefits with Ultipage PRO+",
+    "upgrade": "Upgrade",
+    "monthlyPlan": "Monthly Plan / 3 Months Plan / 6 Months Plan",
+    "dueDate": "Valid until",
+    "reNew": "Renew"    
+  },
+
+  "changeName": {    
+    "heading" : "Change Name",
+    "info" : "Do you want to change your current name?",
+    "fullName": "Full Name",
+    "btnSave": "Save"
+  },
+
+  "changeMobileNumber": {    
+    "heading" : "Change Mobile Number",
+    "info" : "Do you want to change your mobile number?",
+    "currentMobilePhone": "Current mobile phone",
+    "newMobilePhone": "New mobile phone",
+    "btnVerify": "Verify",
+    "notification": "Notification",
+    "notificationInfo": "We will sent an OTP to your mobile number. Do you want to continue?",
+    "notificationBack": "Back",
+    "notificationOk": "Ok"
+  },
+
+  "changeEmail": {    
+    "heading" : "Change Email",
+    "info" : "Do you want to change your current email?",
+    "currentEmail": "Current email address",
+    "newEmail": "New email address",
+    "btnSave": "Save",
+    "notification": "Notification",
+    "notificationInfo": "Your current registered email will be replaced with the one from google. Do you want to continue?",
+    "notificationBack": "Back",
+    "notificationOk": "Ok"
+  },
+  "changeAccountOtp":{
+    "heading": "Verify Mobile Number",
+    "info": "Enter the code we sent to the mobile number",
+    "enterOtp": "Enter OTP",
+    "resendOtp": "Resend OTP",
+    "verify": "Verify",
+    "backToSignin": "Back To Sign in",
+    "warning": "The OTP you entered is incorrect"
+  },
+
+  "settings": {    
+    "heading" : "Settings",
+    "language" : "Language",
+    "additional": "Additional",
+    "termConditions": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "contactUs": "Contact Us",
+    "aboutUltipage": "About Ultipage",
+    "accountManagement": "Account Management",
+    "deleteAccount":"Delete Account"
+  },
+
+  "AlreadyExist": {    
+    "notification": "Confirmation",
+    "notificationInfo": "The email address is already registered on Ultimeal account. You can continue registration with the same email address or with a new email address.",
+    "notificationBack": "Back",
+    "notificationOk": "Ok"
+  },
+  "Error500": {    
+    "notification": "Notification",
+    "notificationInfo": "Internal server error. Try again later!",
+    "notificationOk": "Ok"
+  }
+
+}

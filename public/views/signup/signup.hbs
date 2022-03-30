@@ -1,0 +1,202 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="global-container">
+  <div class="container-fluid white-container d-flex flex-column justify-content-center align-items-center signup">
+    <section class="form mx-3 mb-4 w-100 flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+    {{>logoWithText}}
+
+      <form action="{{ host }}/signup" method="post" onsubmit="return fValidate()" class="auth-box w-100 card p-4 m-0 {{#if failed }}warning {{/if}}">
+          <h3 class="card-title text-left py-2">Sign up</h3>
+          <div class="text-left pb-4">
+            Already have account? <a href="{{ host }}/login"><b class="spinner">Sign in here</b></a>
+          </div>
+          <div class="form-group px-0 mb-0">
+            <label for="fullname" class="f12">Full name</label>
+            <div class="form-group form-primary m-0 p-0 d-flex w-100">
+              <input type="text" class="form-control h-auto p-0" id="fullname" name="fullname" value="{{ data.fullname }}" required="required">
+            </div>
+            <span id="nameWarning" class="f12 text-danger"></span>
+          </div>
+          <div class="form-group px-0 mb-0 pt-1">
+            <label for="phone" class="f12">Mobile number</label>
+            <div class="form-group form-primary m-0 p-0 d-flex w-100">
+              <input type="text" class="form-control h-auto p-0" id="phone" name="phone" value="{{ data.phone }}" required="required">
+            </div>
+          </div>
+          <span id="phoneWarning" class="f12 text-danger"></span>
+          <div class="form-group px-0 mb-0 pt-1">
+            <label for="email" class="f12">Email</label>
+            <div class="form-group form-primary m-0 p-0 d-flex w-100">
+              <input type="text" class="form-control h-auto p-0" id="email" name="email" value="{{ data.email }}" required="required">
+            </div>
+            <span id="emailWarning" class="f12 text-danger"></span>
+          </div>
+          <div class="form-group px-0 mb-0 pt-1">
+            <label for="password" class="f12">Password</label>
+            <div class="form-group form-primary m-0 p-0 d-flex w-100">
+              <input type="password" class="form-control h-auto p-0" id="password" name="password" value="{{ data.password }}">
+            </div>
+            <span id="passwordWarning" class="f12 text-danger"></span>
+          </div>
+          <div class="form-group px-0 mb-0 pt-1">
+            <label for="confirmPassword" class="f12">Confirm Password</label>
+            <div class="form-group form-primary m-0 p-0 d-flex w-100">
+              <input type="password" class="form-control h-auto p-0" id="confirmPassword" name="confirmPassword" value="{{ data.confirmPassword }}">
+            </div>
+            <span id="confirmPasswordWarning" class="f12 text-danger"></span>
+          </div>
+
+          {{#if res }}
+          <span class="f12 text-danger">{{ res.responseMessage }}</span>
+          {{/if}}
+          <div class="form-group px-0 mb-0 pt-3">
+            <div class="col-md-12 text-right px-0">
+              <input type="submit" class="btn btn-primary waves-effect px-4 py-1 text-center" name="submit" value="Next">
+            </div>
+          </div>
+      </form>
+    </section>
+  </div>
+</div>
+<style>
+  .global-container{
+    background: url('{{ host_no_basepath }}/images/loginBG.jpg') no-repeat;
+    background-size: cover;
+  }
+  select {
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+  }
+
+</style>
+<script>
+  $(document).ready(function () {
+
+  })
+  function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+  }
+  $(document).ready(function () {
+    var el = document.querySelectorAll('input[type="email"]');
+    $(':input[type="submit"]').click(function(e) {
+      if(document.getElementById('fullname').value && document.getElementById('phone').value && document.getElementById('email').value) {
+        spinner.show();
+      }
+    })
+    $('.spinner').click(function(e) {
+        spinner.show();
+    })
+  })
+  function fValidate() {
+		var fullname = document.getElementById("fullname").value;
+		var email = document.getElementById("email").value;
+		var phone = document.getElementById("phone").value;
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+
+    var fg = document.getElementsByClassName('form-group')
+    var iFalse = 0;
+    if (fullname) {
+      if (!/[^a-zA-Z]/.test(fullname)) {
+      }else{
+        /*
+        document.getElementById('nameWarning').innerHTML = 'please entry valid name'
+        fg[0].classList.add('warning');
+        spinner.hide();
+        return false;
+        */
+      }
+    }else{
+      iFalse = 1;
+      document.getElementById('nameWarning').innerHTML = 'please entry valid name'
+      fg[0].classList.add('warning');
+      spinner.hide();
+    }
+
+    if (phone) {
+      if (!/[^0-9]/.test(phone)) {
+        document.getElementById('phoneWarning').innerHTML=''
+        fg[2].classList.remove('warning');
+      }else{
+        iFalse = 1;
+        document.getElementById('phoneWarning').innerHTML = 'please entry valid phone number'
+        fg[2].classList.add('warning');
+        spinner.hide();
+
+      }
+    }else{
+      iFalse = 1;
+      document.getElementById('phoneWarning').innerHTML = 'please entry valid phone number'
+      fg[2].classList.add('warning');
+      spinner.hide();
+    }
+
+    if (email) {
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailWarning').innerHTML = ''
+        fg[4].classList.remove('warning');
+      }else{
+        iFalse = 1;
+        document.getElementById('emailWarning').innerHTML = 'please entry valid email'
+        fg[4].classList.add('warning');
+        spinner.hide();
+      }
+    }else{
+      iFalse = 1;
+      document.getElementById('emailWarning').innerHTML = 'please entry valid email'
+      fg[4].classList.add('warning');
+      spinner.hide();
+    }
+    if (password != confirmPassword) {
+        iFalse = 1;
+        document.getElementById('confirmPasswordWarning').innerHTML = 'your password and confirmation password do not match.'
+        fg[8].classList.add('warning');
+        spinner.hide();
+    }else{
+
+      if(password) {
+        //var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        if (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)) {
+          document.getElementById('passwordWarning').innerHTML = ''
+          fg[6].classList.remove('warning');
+        }else{
+          iFalse = 1;
+          document.getElementById('passwordWarning').innerHTML = 'please entry strong password'
+          fg[6].classList.add('warning');
+          spinner.hide();
+        }
+      }else{
+        iFalse = 1;
+        document.getElementById('passwordWarning').innerHTML = 'please entry strong password'
+        fg[6].classList.add('warning');
+        spinner.hide();
+
+      }
+      if(confirmPassword) {
+        //var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        if (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(confirmPassword)) {
+          document.getElementById('confirmPasswordWarning').innerHTML = ''
+          fg[8].classList.remove('warning');
+        }else{
+          iFalse = 1;
+          document.getElementById('confirmPasswordWarning').innerHTML = 'please entry strong confirm password'
+          fg[8].classList.add('warning');
+          spinner.hide();
+        }
+
+      }else{
+        iFalse = 1;
+        document.getElementById('confirmPasswordWarning').innerHTML = 'please entry strong confirm password'
+        fg[8].classList.add('warning');
+        spinner.hide();
+
+      }    
+    }
+
+    if(iFalse == 1) {
+        return false;
+    }
+  }
+</script>

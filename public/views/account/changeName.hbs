@@ -1,0 +1,68 @@
+<div class="global-container subscribe-page">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+        <section class="myaccount form p-3 m-0 w-100 h-100 flex-grow-1 d-flex flex-column h-100">
+            <form action="{{ host }}/account/myaccount" method="post" class="" onsubmit="return fValidate()">
+                <div class="form-group px-0 mb-2 pt-3">
+                    <p>{{#if language }}{{ language.info }}{{else}}Do you want to change your current name?{{/if}}</p>
+                </div>
+                <div class="form-group px-0 mb-2">
+                    <label for="fullname">{{#if language }}{{ language.fullName }}{{else}}Full name{{/if}}</label>
+                    <div class="form-group form-primary w-100 mb-1">
+                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full name"
+                            value="{{ profile.data.fullname }}">
+                    </div>
+                    <span id="nameWarning" class="f12 text-danger">{{ res.responseMessage }}</span>
+                </div>
+
+                <div class="form-group col px-0 py-5">
+                    <div class="col-md-12 text-center px-3">
+                        <button class="btn btn-primary waves-effect px-5 text-center py-1">{{#if language }}{{ language.btnSave }}{{else}}Save{{/if}}</button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+<style>
+    p {
+        color: #373737;
+    }
+
+    .myaccount {
+        background: none;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $(':button').click(function(e) {
+            spinner.show();
+        })
+    })
+  function fValidate() {
+    var fullname = document.getElementById("fullname").value;
+    var fg = document.getElementsByClassName('form-group')
+    var iFalse = 0;
+    if (fullname) {
+      if (!/[^a-zA-Z]/.test(fullname)) {
+      }else{
+        /*
+        document.getElementById('nameWarning').innerHTML = 'please entry valid name'
+        fg[1].classList.add('warning');
+        spinner.hide();
+        return false;
+        */
+      }
+    }else{
+      iFalse = 1;
+      document.getElementById('nameWarning').innerHTML = 'please entry valid name'
+      fg[1].classList.add('warning');
+      spinner.hide();
+    }
+
+    if(iFalse == 1) {
+        return false;
+    }
+  }    
+</script>

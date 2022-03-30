@@ -1,0 +1,123 @@
+{
+  "lang_name": {
+    "en": "English",
+    "id": "Indonesian"
+  },
+  "signin":{
+    "heading": "Masuk",
+    "newUser": "Pengguna baru?",
+    "createAccount": "Buat akun disini",
+    "mobileNumber": "Nomor Ponsel",
+    "btnSignin": "Masuk",
+    "or": "ATAU",
+    "btnGoogle": "Masuk dengan Google"
+  },
+  
+  "otp":{
+    "heading": "Verifikasi",
+    "info": "Masukkan kode yang dikirimkan ke nomor ponsel Anda",
+    "enterOtp": "Masukkan OTP",
+    "resendOtp": "Kirim Ulang OTP",
+    "verify": "Verifikasi",
+    "backToSignin": "Kembali",
+    "warning": "Kode OTP yang Anda masukkan salah"
+  },
+
+  "signup":{    
+    "signup" : "Daftar",
+    "alreadyHaveAccount" : "Sudah memiliki akun?",
+    "signinInHere" : "Masuk disini",
+    "fullname" : "Nama",
+    "mobileNumber": "Nomor Ponsel",
+    "email": "Email",
+    "btnNext": "Lanjutkan",
+    "backToSignup": "Kembali "    
+  },
+
+  "account": {    
+    "heading" : "Akun",
+    "myAccount" : "Akun Saya",
+    "changeUrl" : "Ubah URL",
+    "switchAccount": "Ganti Akun",
+    "insight": "Insights",
+    "seoTools": "SEO Tools",
+    "settings": "Pengaturan",
+    "logout": "Keluar"
+  },
+
+  "myAccount": {    
+    "heading" : "Akun Saya",
+    "fullName" : "Nama",
+    "mobileNumber": "Nomor Ponsel",
+    "email": "Email",
+    "linkAccount": "Hubungkan Akun",
+    "linkAccountWithGoogle": "Hubungkan dengan Google",
+    "subscriptionPlan": "Paket Berlangganan",
+    "basicPlan": "Paket Dasar",
+    "getPremium": "Nikmati fitur premium dengan Ultipage PRO+",
+    "upgrade": "Aktfikan",
+    "monthlyPlan": "Paket Bulanan / Paket 3 Bulan / Paket 6 Bulan",
+    "dueDate": "Berlaku hingga",
+    "reNew": "Perbarui"    
+  },
+
+  "changeName": {    
+    "heading" : "Ubah Nama",
+    "info" : "Apakah Anda ingin mengubah nama yang digunakan saat ini?",
+    "fullName": "Nama",
+    "btnSave": "Simpan"
+  },
+
+  "changeMobileNumber": {    
+    "heading" : "Ubah Nomor Ponsel",
+    "info" : "Apakah Anda ingin mengubah nomor ponsel yang digunakan saat ini?",
+    "currentMobilePhone": "Nomor Ponsel Saat Ini",
+    "newMobilePhone": "Nomor Ponsel Baru",
+    "btnVerify": "Verifikasi",
+    "notification": "Perhatian",
+    "notificationInfo": "Kode OTP akan dikirim ke nomor ponsel Anda. Apakah Anda yakin untuk melanjutkan? ",
+    "notificationBack": "Batal",
+    "notificationOk": "Ok"
+  },
+
+  "changeEmail": {    
+    "heading" : "Ubah Alamat Email",
+    "info" : "Apakah Anda ingin mengubah email yang digunakan saat ini?",
+    "currentEmail": "Alamat email saat ini",
+    "newEmail": "Alamat email baru",
+    "btnSave": "Simpan",
+    "notification": "Perhatian",
+    "notificationInfo": "Apakah Anda ingin mengubah email yang digunakan saat ini?",
+    "notificationBack": "Batal",
+    "notificationOk": "Ok"
+  },
+  "changeAccountOtp":{
+    "heading": "Verifikasi Nomor Ponsel",
+    "info": "Masukkan kode yang dikirimkan ke nomor ponsel Anda",
+    "enterOtp": "Masukkan OTP",
+    "resendOtp": "Kirim Ulang OTP",
+    "verify": "Verifikasi",
+    "backToSignin": "Kembali",
+    "warning": "Kode OTP yang Anda masukkan salah"
+  },
+  
+  "settings": {    
+    "heading" : "Pengaturan",
+    "language" : "Bahasa",
+    "additional": "Informasi",
+    "termConditions": "Syarat & Ketentuan",
+    "privacyPolicy": "Kebijakan Privasi",
+    "contactUs": "Hubungi Kami",
+    "aboutUltipage": "Tentang Ultipage",
+    "accountManagement": "Pengaturan Akun",
+    "deleteAccount":"Hapus Akun"
+  },
+
+  "AlreadyExist": {    
+    "notification": "Konfirmasi",
+    "notificationInfo": "Alamat email telah digunakan pada akun Ultimeal. Anda dapat melanjutkan pendaftaran dengan alamat email yang sama atau dengan alamat email yang baru.",
+    "notificationBack": "Batal",
+    "notificationOk": "Ok"        
+  }
+
+}

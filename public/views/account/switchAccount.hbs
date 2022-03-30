@@ -1,0 +1,136 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="global-container subscribe-page">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+        <section class="myaccount form p-3 m-0 w-100 h-100 flex-grow-1 d-flex flex-column h-100">
+            {{!-- <form action="{{ host }}/account/switchAccount" method="post" class=""> --}}
+                <div class="form-group px-0 mb-2 pt-3">
+                    <h4>{{#if language }}{{ language.ultipagePartnerAccount }}{{else}}Ultipage Partner Account{{/if}}</h4>
+                    <label>{{#if language }}{{ language.info }}{{else}}Organize all your account in one place{{/if}}</label>
+                </div>
+                {{#each data}}
+                    <div class="form-group px-0 mb-2 shadow bg-white rounded p-2 divSwitch" data-phone="{{ this.phone }}" data-phonecode="{{ this.phoneCode }}" data-deviceid="{{ ../deviceId }}">
+                        <div class="form-group form-primary d-flex w-100">
+                            <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center">
+                                {{!-- <div class="ellips w-75 h-75 d-flex flex-column justify-content-center align-items-center">T</div> --}}
+                                <div class="ellips accountLogo w-75 h-75 d-flex flex-column justify-content-center align-items-center">
+                                    <img src="{{ this.imageUrl }}" >
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-8 f14 py-1"><p class="my-0">{{ this.name }}</p><label class="m-0">ultipage.id/{{ this.urlName }}</label> </div>
+                            <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center">
+                                <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                                    <label class="container-checkbox">
+                                    <input type="checkbox" {{#ifEquals this.id ../profile.merchantId }}checked="checked"{{/ifEquals}} >
+                                    <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                {{/each}}
+                {{!-- 
+                <div class="form-group px-0 mb-2 shadow bg-white rounded p-2">
+                    <div class="form-group form-primary d-flex w-100">
+                        <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center"><div class="ellips w-75 h-75 d-flex flex-column justify-content-center align-items-center">T</div></div>
+                        <div class="col-sm-8 col-8 f14 py-1"><p class="my-0">Teresa Winata</p><label class="m-0">ultipage.id/mangome</label> </div>
+                        <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center">
+                            <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                                <label class="container-checkbox">
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="form-group px-0 mb-2 shadow bg-white rounded p-2">
+                    <div class="form-group form-primary d-flex w-100">
+                        <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center"><div class="ellips w-75 h-75 d-flex flex-column justify-content-center align-items-center">T</div></div>
+                        <div class="col-sm-8 col-8 f14 py-1"><p class="my-0">Starbucks Tere</p><label class="m-0">ultipage.id/startere</label> </div>
+                        <div class="col-sm-2 col-2 px-0 d-flex flex-column justify-content-center align-items-center">
+                            <div class="form-check d-flex flex-column justify-content-center align-items-center">
+                                <label class="container-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                {{!-- <div class="form-group d-flex w-100 mt-5">
+                    <input type="text" class="form-control" name="addNewAccount" placeholder="Add new account" value=""
+                                    id="addNewAccount">
+                                <div class="input-group-addon">
+                                    <a class="d-flex h-100" href="{{ host }}/login"><i
+                                            class="fas fa-plus justify-content-center align-self-center"
+                                            aria-hidden="true"></i></a>
+                                            
+                                </div>
+                </div> --}}
+                <div class="form-group addnew form-primary d-flex w-100 mb-2 mt-5 border-bottom">
+                    <div class="form-group col-md-8 col-8 my-0 py-2 px-0">
+                        <a class="" href="{{ host }}/login">{{#if language }}{{ language.addNew }}{{else}}Add new account{{/if}}</a>
+                    </div>
+                    <div class="form-group col-md-4 col-4 my-0 py-2 px-0 text-right">
+                        <a class="" href="{{ host }}/login"><i class="fas fa-plus justify-content-center align-self-center" aria-hidden="true"></i></a>
+                    </div>
+                    </a>
+                </div>
+
+
+            {{!-- </form> --}}
+        </section>
+    </div>
+</div>
+<style>
+    .myaccount h4 {
+        color: #373737;
+        font-size: 22px;
+        font-weight: 400;
+    }
+    p {
+        color: #373737;
+    }
+
+    .myaccount {
+        background: none;
+    }
+    .accountLogo {
+        padding: .5rem;
+    }
+    .accountLogo img {
+        border-radius: 50%;
+        max-width: 100%;
+    }
+    .addnew {
+        color: #6c757d;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+    .addnew a{
+        color: #6c757d;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $(".divSwitch").click(function(){
+            spinner.show();
+            var data = JSON.stringify({"phone": this.dataset.phone, "phoneCode": this.dataset.phonecode, "deviceId": this.dataset.deviceid});
+            $.post("{{ host }}" + "/login/switch",{data:data}).done(function(result){
+                spinner.hide();
+                //console.log('result =>',result)
+                $('#bodyId').html(result);
+                var fiveMinutes = 30 * 1,
+                display = document.querySelector('#time');
+                startTimer(fiveMinutes, display);
+            })            
+        })
+    })
+</script>

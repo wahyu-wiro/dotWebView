@@ -1,0 +1,135 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="global-container">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+        <section class="myaccount form p-3 m-0 w-100 h-100 flex-grow-1 d-flex flex-column h-100">
+            <form>
+                <div class="form-group px-0 mb-2 pt-3">
+                    <label for="fullName">{{#if language }}{{ language.fullName }}{{else}}Full name{{/if}}</label>
+                    <div class="form-group form-primary d-flex w-100 mb-1">
+                        <input type="hidden" id="merchantId" name="merchantId" value="{{ data.merchantId }}" >
+                        {{!-- <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full name"
+                            value="{{ data.fullname }}"> --}}
+                        <div class="w-100 field"><a href="{{ host }}/account/changeName">{{ data.fullname }}</a></div>
+                        <div class="input-group-addon">
+                                <a class="d-flex h-100" href="{{ host }}/account/changeName"><i
+                                        class="fas fa-angle-right justify-content-center align-self-center"
+                                        aria-hidden="true"></i></a>
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group px-0 mb-2">
+                    <label for="phoneNumber">{{#if language }}{{ language.mobileNumber }}{{else}}Mobile Number{{/if}}</label>
+                    <div class="form-group form-primary d-flex w-100 mb-1">
+                        {{!-- <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                            placeholder="Phone Number" value="{{ data.phone }}"> --}}
+                        <div class="w-100 field"><a href="{{ host }}/account/changePhone">{{#ifEquals data.phoneCode '+62' }}0{{/ifEquals}}{{ data.phone }}</a></div>
+                        <div class="input-group-addon">
+                                <a class="d-flex h-100" href="{{ host }}/account/changePhone"><i
+                                        class="fas fa-angle-right justify-content-center align-self-center"
+                                        aria-hidden="true"></i></a>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="form-group px-0 mb-2">
+                    <label for="email">Email</label>
+                    <div class="form-group form-primary d-flex w-100 mb-1">
+                        {{!-- <input type="text" class="form-control" id="email" name="email" placeholder="Email"
+                            value="{{ data.email }}"> --}}
+                            <div class="w-100 field"><a href="{{ host }}/account/changeEmail">{{ data.email }}</a></div>
+                        <div class="input-group-addon">
+                                <a class="d-flex h-100" href="{{ host }}/account/changeEmail"><i
+                                        class="fas fa-angle-right justify-content-center align-self-center"
+                                        aria-hidden="true"></i></a>
+                            </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group px-0 mb-2 d-none">
+                    <label for="SEOTitle">{{#if language }}{{ language.linkAccount }}{{else}}Link account{{/if}}</label>
+                    <div class="form-group form-primary d-flex w-100 mb-1">
+                        <a class="btn btn-lg btn-google btn-block btn-outline f12" href="#" style="color: #045789;"><img
+                                src="{{ host_no_basepath }}/{{ basepath }}/images/google-logo.png"> {{#if language }}{{ language.linkAccountWithGoogle }}{{else}}Link with Google{{/if}}</a>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+<style>
+    select {
+        background: #fff;
+        border: none;
+        border-bottom: 1px solid #ced4da;
+    }
+    .btn-google {
+        visibility: visible;
+    }
+    .basic-plan {
+        background: #FFFDEB;
+        border: 1px solid #E6DC82;
+        color: #6A6A6A;
+    }
+
+    .basic-plan span {
+        color: #373737;
+    }
+
+    .basic-plan b {
+        color: #045789;
+    }
+
+    .monthly-plan {
+        background: #EBF7FF;
+        border: 1px solid #045789;
+        color: #6A6A6A;
+    }
+
+    .monthly-plan span {
+        color: #373737;
+    }
+
+    .monthly-plan b {
+        color: #045789;
+    }
+
+    .subscribe-page .btn {
+        background: none;
+        color: #8D8D8D;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#txtSubCategory").change(function(){ 
+            //spinner.show();
+            var id = $("#txtSubCategory").val();
+            var data = JSON.stringify({"id": id});
+            console.log('data =>',data)
+            $.post("{{ host }}/account/merchantSubCategory",{data:data}).done(function(result){
+                console.log('result =>',data)
+                //spinner.hide();
+
+            })
+        });
+
+
+        $("#txtCategory").change(function(){ 
+            spinner.show();
+            var id = $("#txtCategory").val();
+            var data = JSON.stringify({"id": id});
+            $.post("{{ host }}/account/merchantCategory",{data:data}).done(function(result){
+                spinner.hide();
+            })
+            //spinner.show();
+
+            $.get("{{ host }}/account/subCategory/"+id).done(async function(result){
+                spinner.hide();
+                $("#txtSubCategory").html(result);
+            })
+        });
+
+    })
+</script>

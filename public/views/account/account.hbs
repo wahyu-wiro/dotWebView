@@ -1,0 +1,63 @@
+
+<script type="text/javascript" src="//wurfl.io/wurfl.js"></script>
+<script>
+    //alert(WURFL.complete_device_name);
+</script>
+<div class="global-container">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-white p-0 h-100">
+        {{>header}}
+        <section class="account p-3 m-0 w-100 h-100 flex-grow-1 d-flex flex-column h-100">
+            <a  class="pt-4" href="{{ host }}/account/myaccount">
+            <div class="form-group d-flex w-100 px-0 py-2">
+                    <div class="col-sm-10 col-10 px-0 spinner">
+                        {{#if language }}{{ language.myAccount }}{{else}}MY ACCOUNT{{/if}}
+                    </div>
+                    <div class="col-sm-2 col-2 px-0 text-right">
+                        <i class="fas fa-user spinner"></i>
+                    </div>
+                {{!-- <div class="col-sm-10 col-10 px-0">
+                    <a href="{{ host }}/account/myaccount">{{#if language }}{{ language.myAccount }}{{else}}MY ACCOUNT{{/if}}</a>
+                </div>
+                <div class="col-sm-2 col-2 px-0 text-right">
+                    <a href="{{ host }}/account/myaccount"><i class="fas fa-user"></i></a>
+                </div> --}}
+            </div>
+            </a>
+
+            <a href="{{ host }}/setting">
+            <div class="form-group d-flex w-100 px-0 py-2">
+                <div class="col-sm-10 col-10 px-0 spinner">
+                    {{#if language }}{{ language.settings }}{{else}}SETTINGS{{/if}}
+                </div>
+                <div class="col-sm-2 col-2 px-0 text-right">
+                    <i class="fas fa-tools spinner"></i>
+                </div>
+            </div>
+            </a>
+            <a href="{{ host }}/logout">
+            <div class="form-group d-flex w-100 px-0 py-2">
+                <div class="col-sm-10 col-10 px-0 spinner">
+                    {{#if language }}{{ language.logout }}{{else}}LOGOUT{{/if}}
+                </div>
+                <div class="col-sm-2 col-2 px-0 text-right">
+                    <i class="fas fa-power-off"></i>
+                </div>
+            </div>
+            </a>
+        </section>
+    </div>
+</div>
+<div id="loader"></div>
+<style>
+    .pro {
+        color: #045789;
+        transform: rotate(20deg);
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.spinner').click(function(e) {
+            spinner.show();
+        })
+    })
+</script>

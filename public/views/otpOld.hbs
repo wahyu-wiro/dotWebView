@@ -1,0 +1,162 @@
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+    </script>
+
+    <link href="/bootstrap/bootstrap-pincode-input.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/bootstrap/bootstrap-pincode-input.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#txtPin').pincodeInput({
+                hidedigits: false,
+                inputs: 6,
+                complete: function (value, e, errorElement) {
+                  document.getElementById("submit").style.backgroundColor='#144371';
+                }
+            });
+            $(".resend").click(function(){
+              var phone = document.getElementById("phone").value;
+              var phoneCode = document.getElementById("phoneCode").value;
+              var deviceId = document.getElementById("deviceId").value;
+              var data = JSON.stringify({"phone": phone, "phoneCode": phoneCode, "deviceId": deviceId});
+              
+              //$.post({{ host }} + "/otp/resend", data, function(result){     
+              $.post("/otp/resend", data, function(result){               
+                spinner.show();
+                document.getElementsByClassName('text-danger')[0].innerHTML=''
+
+                document.getElementById("txtPin").value='';
+                setInterval(function(){ 
+                  spinner.hide();
+                  //el[0].focus();
+                }, 3000);
+                
+              });
+            });
+
+        });
+    </script>
+	<style>
+	.pincode-input-text, .form-control.pincode-input-text {
+		border: 1px solid #D5D5D5 !important;
+		margin: 3px;
+		border-radius: 5px !important;
+		height: 50px;
+		width: 34px !important;
+		display: flex;
+		align-items: center !important;
+		justify-content: center !important;
+	}
+	</style>
+
+  <div class="global-container">
+  <div class="container-fluid white-container d-flex flex-column justify-content-center align-items-center">
+    <section class="form otp mx-3 mb-4 w-100 flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      {{>logoWithText}}
+
+      <form action="{{ host }}/otp" method="post" class="auth-box card px-4 pt-4 m-0" name="otpForm" id="otpForm" onsubmit="return fValidasi()">
+        <h3 class="text-left mt-2">Verifying</h3>
+        <div class="text-left py-3 f14">
+          Enter the code we sent to the mobile number
+          <!--
+          Enter the code we sent to the mobile number ending in {{ end }}
+          -->
+        </div>
+        <div class="form-group px-0 py-0">
+          <span class="f12">Enter OTP</span>
+          <div class="col-md-12 px-0 pin d-flex {{#if failed }}warning {{/if}}">
+            <!--
+            <input type="number" maxlength="1" class="form-control" id="txt1" name="txt1" value="{{ data.txt1 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <input type="number" maxlength="1" class="form-control" id="txt2" name="txt2" value="{{ data.txt2 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <input type="number" maxlength="1" class="form-control" id="txt3" name="txt3" value="{{ data.txt3 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <input type="number" maxlength="1" class="form-control" id="txt4" name="txt4" value="{{ data.txt4 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <input type="number" maxlength="1" class="form-control" id="txt5" name="txt5" value="{{ data.txt5 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <input type="number" maxlength="1" class="form-control" id="txt6" name="txt6" value="{{ data.txt6 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            -->
+            <input type="text" id="txtPin">
+          </div>
+          {{#if response }}
+          <span class="f12 text-danger">{{ response.responseMessage }}</span>
+          {{/if}}
+        </div>
+        <div class="form-group px-0 d-flex flex-column justify-content-center align-items-start flex-grow-1">
+          <div class="form-row w-100">
+            <div class="form-group col-md-8 col-8 mb-0">
+              <b id="resend" class="justify-content-center align-self-center f12 resend">Resend OTP <span id="time">(00 : 30)</span></b>
+            </div>
+            <div id="divBtn" class="form-group col-md-4 col-4 text-right mb-0 p-0">
+              <input type="hidden" id="phoneCode" name="phoneCode" value="+62">
+              <input type="hidden" id="phone" name="phone" value="{{ data.phone }}">
+              <input type="hidden" id="deviceId" name="deviceId" value="{{ data.deviceId }}">
+              <input type="hidden" name="urlName" id="urlName" value="{{ data.urlName }}">
+              <input type="hidden" id="filter" name="filter" value="{{ data.filter }}">
+
+              <input type="submit" class="btn waves-effect py-1 px-4 h-auto text-center" name="submit" id="submit" value="Verify">
+            </div>
+          </div>
+        </div>
+        <div class="mx-0 footer py-2">
+          <div class="col-sm-12 text-center">
+            {{#if back }}
+            <a href="{{ back.link }}/">{{ back.text }}</a>
+            {{else}}
+            <a href="{{ host }}/">Back to Sign In</a>
+            {{/if}}
+          </div>
+        </div>
+
+      </form>
+    </section>
+  </div>
+  <script>
+    function fValidasi() {
+      var el = document.getElementById('txtPin');
+      if(el[0].value){
+        spinner.show();
+        return true;
+      }else {
+        return false;
+      }
+    }
+
+    function startTimer(duration, display) {
+      var timer = duration, minutes, seconds;
+      var x = setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = '('+minutes + " : " + seconds+')';
+
+          if (--timer < 0) {
+              timer = duration;
+              clearInterval(x);
+              var re = document.getElementById("resend");
+              re.style.cursor="pointer"
+              re.style.color = "#045789"
+
+              //el.innerHTML = '<a onclick="return resendOtp()" href="#">Resend OTP</a>';
+              var el = document.getElementById("time");
+              el.innerHTML = '';
+              el.style.color = "#045789"
+          }
+      }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 30 * 1,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+  </script>
